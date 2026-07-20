@@ -2,8 +2,8 @@ package com.sky.aspect;
 
 import com.sky.annotation.AutoFill;
 import com.sky.constant.AutoFillConstant;
+import com.sky.context.BaseContext;
 import com.sky.enumeration.OperationType;
-import javassist.bytecode.SignatureAttribute;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -38,7 +38,7 @@ public class AutoFillAspect {
         Object entity = joinPoint.getArgs()[0];
         //准备要赋值的数据
         LocalDateTime now = LocalDateTime.now();
-        Long currentTimeMillis = System.currentTimeMillis();
+        Long currentId = BaseContext.getCurrentId();
         //最后根据不同的数据库操作类型进行赋值操作
         try {       //获取entity对象的运行时Class对象-->然后通过(方法名,参数类型)获取setter方法-->最后通过反射给对象赋值
             entity.getClass()
@@ -46,14 +46,14 @@ public class AutoFillAspect {
                     .invoke(entity, now);
             entity.getClass()
                     .getDeclaredMethod(AutoFillConstant.SET_UPDATE_USER, Long.class)
-                    .invoke(entity, currentTimeMillis);
+                    .invoke(entity, currentId);
             if (operationType == OperationType.INSERT) {
                 entity.getClass()
                         .getDeclaredMethod(AutoFillConstant.SET_CREATE_TIME, LocalDateTime.class)
                         .invoke(entity, now);
                 entity.getClass()
                         .getDeclaredMethod(AutoFillConstant.SET_CREATE_USER, Long.class)
-                        .invoke(entity, currentTimeMillis);
+                        .invoke(entity, currentId);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

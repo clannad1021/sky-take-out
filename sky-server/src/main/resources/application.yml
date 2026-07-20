@@ -37,3 +37,13 @@ sky:
     admin-ttl: 7200000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+    #aliyun OSS配置
+  alioss:
+    endpoint: ${ALIYUN_OSS_ENDPOINT:https://oss-cn-shenzhen.aliyuncs.com}
+    region: ${ALIYUN_OSS_REGION:cn-shenzhen}
+    bucket-name: ${ALIYUN_OSS_BUCKET}
+    access-key-id: ${ALIYUN_OSS_ACCESS_KEY_ID}
+    access-key-secret: ${ALIYUN_OSS_ACCESS_KEY_SECRET}
+
+
+
