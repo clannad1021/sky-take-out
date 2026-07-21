@@ -97,8 +97,14 @@ public class DishServiceImpl implements DishService {
         Dish dish = new Dish();
         BeanUtils.copyProperties(dishDTO, dish);
         dishMapper.updatedish(dish);
-        dishFlavorMapper.selectByDishId(dish.getId());
-        dishDTO.getFlavors().get(0).setDishId(dish.getId());
+        ArrayList<Long> longs = new ArrayList<>();
+        longs.add(dish.getId());
+        dishFlavorMapper.delectSetmeal(longs);
+        //dishFlavorMapper.selectByDishId(dish.getId());
+        //dishDTO.getFlavors().get(0).setDishId(dish.getId()); 错误写法只能给第一个口味绑定菜品，必须遍历
+        dishDTO.getFlavors().forEach(flavor -> { //优化后
+            flavor.setDishId(dish.getId());
+        });
         dishFlavorMapper.add(dishDTO.getFlavors());
     }
 
