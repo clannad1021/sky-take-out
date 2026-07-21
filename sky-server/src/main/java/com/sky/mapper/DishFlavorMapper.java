@@ -12,4 +12,6 @@ import java.util.List;
 public interface DishFlavorMapper {
 
     void add(@Param("flavors") List<DishFlavor> flavors);
+
+    void delectSetmeal(List<Long> dishId);
 }
