@@ -32,8 +32,9 @@ public interface DishMapper {
     List<DishVO> dishSelect(DishPageQueryDTO dishPageQueryDTO);
 
     void deleteDish(List<Long> ids);
+
     @Select("select * from dish where id = #{id}")
-    Dish getById(Object id);
+    Dish getById(Long id);
 
     @Select("select * from setmeal_dish where dish_id = #{id}")
     SetmealDish setmealGetById(Object id);

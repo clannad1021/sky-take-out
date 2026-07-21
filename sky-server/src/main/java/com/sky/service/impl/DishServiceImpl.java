@@ -15,6 +15,7 @@ import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
+import com.sky.result.Result;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
 import org.springframework.beans.BeanUtils;
@@ -64,7 +65,7 @@ public class DishServiceImpl implements DishService {
         List<Long> dishId = new ArrayList<>();
         //遍历要删除的菜品，
         for (Object id : ids) {
-            Dish dish = dishMapper.getById(id);
+            Dish dish = dishMapper.getById((Long) id);
             SetmealDish setmeal = dishMapper.setmealGetById(id);
             if (dish.getStatus() == StatusConstant.ENABLE){ //如果有启售中的就抛出异常
                 throw new DeletionNotAllowedException(MessageConstant.DISH_ON_SALE);
@@ -79,6 +80,16 @@ public class DishServiceImpl implements DishService {
         dishMapper.deleteDish(ids);
         dishFlavorMapper.delectSetmeal(dishId);
 
+    }
+
+    @Override
+    public DishVO selsctDishById(Long id) {
+        Dish dish = dishMapper.getById(id);
+        DishVO dishVO = new DishVO();
+        BeanUtils.copyProperties(dish, dishVO);
+        List<DishFlavor> flavorslist = dishFlavorMapper.selectByDishId(id);
+        dishVO.getFlavors().addAll(flavorslist);
+        return dishVO;
     }
 
 
