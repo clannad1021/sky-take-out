@@ -92,5 +92,15 @@ public class DishServiceImpl implements DishService {
         return dishVO;
     }
 
+    @Override
+    public void updateDish(DishDTO dishDTO) {
+        Dish dish = new Dish();
+        BeanUtils.copyProperties(dishDTO, dish);
+        dishMapper.updatedish(dish);
+        dishFlavorMapper.selectByDishId(dish.getId());
+        dishDTO.getFlavors().get(0).setDishId(dish.getId());
+        dishFlavorMapper.add(dishDTO.getFlavors());
+    }
+
 
 }

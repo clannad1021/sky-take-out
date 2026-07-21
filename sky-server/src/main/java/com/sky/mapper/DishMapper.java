@@ -39,5 +39,6 @@ public interface DishMapper {
     @Select("select * from setmeal_dish where dish_id = #{id}")
     SetmealDish setmealGetById(Object id);
 
-
+    @AutoFill(OperationType.UPDATE)
+    void updatedish(Dish dish);
 }

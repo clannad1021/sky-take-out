@@ -47,4 +47,17 @@
             #{id}
         </foreach>
     </delete>
+
+    <update id="updatedish">
+        update dish
+        <set>
+            <if test="name !=null and name != ''"> name = #{name}, </if>
+            <if test="categoryId !=null"> category_id = #{categoryId}, </if>
+            <if test="price !=null"> price = #{price}, </if>
+            <if test="image !=null and name != ''"> image = #{image}, </if>
+            <if test="description !=null and description != ''"> description = #{description}, </if>
+            <if test="updateTime !=null"> update_time = #{updateTime} </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

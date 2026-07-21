@@ -46,4 +46,11 @@ public class DishController {
     public Result<DishVO> selectDishById(@PathVariable Long id){
         return Result.success(dishService.selsctDishById(id));
     }
+
+    @PutMapping
+    @ApiOperation("修改菜品")
+    public Result updateDish(@RequestBody DishDTO dishDTO){
+        dishService.updateDish(dishDTO);
+        return Result.success();
+    }
 }
