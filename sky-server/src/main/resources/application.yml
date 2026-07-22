@@ -17,6 +17,8 @@ spring:
       host: ${sky.data.redis.host}
       port: ${sky.data.redis.port}
 
+
+
 mybatis:
   #mapper配置文件
   mapper-locations: classpath:mapper/*.xml
@@ -36,18 +38,24 @@ logging:
 sky:
   jwt:
     # 设置jwt签名加密时使用的秘钥
-    admin-secret-key: itcast
+    admin-secret-key: nagisa
     # 设置jwt过期时间
     admin-ttl: 7200000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
     #aliyun OSS配置
+    user-secret-key: nagisa
+    user-ttl: 7200000
+    user-token-name: authentication
   alioss:
     endpoint: ${ALIYUN_OSS_ENDPOINT:https://oss-cn-shenzhen.aliyuncs.com}
     region: ${ALIYUN_OSS_REGION:cn-shenzhen}
     bucket-name: ${ALIYUN_OSS_BUCKET}
     access-key-id: ${ALIYUN_OSS_ACCESS_KEY_ID}
     access-key-secret: ${ALIYUN_OSS_ACCESS_KEY_SECRET}
+  wechat:
+    appid: ${sky.wechat.appid}
+    secret: ${sky.wechat.secret}
 
 
 
