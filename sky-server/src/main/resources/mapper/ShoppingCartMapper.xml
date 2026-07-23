@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- SetmealMapper.xml -->
+<mapper namespace="com.sky.mapper.ShoppingCartMapper">
+    <select id="selectShoppingCart" resultType="com.sky.entity.ShoppingCart">
+        select * from shopping_cart
+        <where>
+            <if test="userId != null">and user_id = #{userId} </if>
+            <if test="dishId != null">and dish_id = #{dishId} </if>
+            <if test="dishFlavor != null">and dish_flavor = #{dishFlavor}</if>
+            <if test="setmealId != null">and setmeal_id = #{setmealId}</if>
+        </where>
+    </select>
+
+    <insert id="addShoppingCart">
+        insert into shopping_cart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null"> user_id, </if>
+            <if test="dishId != null"> dish_id, </if>
+            <if test="dishFlavor != null"> dish_flavor, </if>
+            <if test="setmealId != null"> setmeal_id, </if>
+            <if test="number != null"> number, </if>
+            <if test="name != null"> name, </if>
+            <if test="image != null"> image, </if>
+            <if test="amount != null"> amount, </if>
+            <if test="createTime != null"> create_time, </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null"> #{userId}, </if>
+            <if test="dishId != null"> #{dishId}, </if>
+            <if test="dishFlavor != null"> #{dishFlavor}, </if>
+            <if test="setmealId != null"> #{setmealId}, </if>
+            <if test="number != null"> #{number}, </if>
+            <if test="name != null"> #{name}, </if>
+            <if test="image != null"> #{image}, </if>
+            <if test="amount != null"> #{amount}, </if>
+            <if test="createTime != null"> #{createTime}, </if>
+        </trim>
+    </insert>
+
+    <update id="updateShoppingCart">
+        update shopping_cart
+        <set>
+            number = #{number}
+        </set>
+        <where>
+           id = #{id}
+        </where>
+    </update>
+</mapper>
