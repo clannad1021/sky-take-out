@@ -49,4 +49,18 @@
            id = #{id}
         </where>
     </update>
+
+    <select id="selectAllShoppingCart" resultType="com.sky.entity.ShoppingCart">
+        select * from shopping_cart where user_id = #{userId}
+    </select>
+
+    <delete id="deleteShoppingCart">
+        delete from shopping_cart
+        <where>
+            <if test="userId != null">and user_id = #{userId} </if>
+            <if test="dishId != null">and dish_id = #{dishId} </if>
+            <if test="dishFlavor != null">and dish_flavor = #{dishFlavor} </if>
+            <if test="setmealId != null">and setmeal_id = #{setmealId} </if>
+        </where>
+    </delete>
 </mapper>

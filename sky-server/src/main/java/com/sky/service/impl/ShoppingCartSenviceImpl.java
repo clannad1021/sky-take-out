@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ShoppingCartSenviceImpl implements ShoppingCartSenvice {
@@ -38,7 +39,7 @@ public class ShoppingCartSenviceImpl implements ShoppingCartSenvice {
             shoppingCartMapper.updateShoppingCart(shoppingCartOrd);
 
         } else {
-            if (shoppingCart.getDishId() != null) {
+            if (shoppingCart.getDishId() != null) { //判断是不是菜品
                 Dish dish = dishMapper.getById(shoppingCart.getDishId());
                 shoppingCart.setName(dish.getName());
                 shoppingCart.setImage(dish.getImage());
@@ -55,4 +56,36 @@ public class ShoppingCartSenviceImpl implements ShoppingCartSenvice {
             shoppingCartMapper.addShoppingCart(shoppingCart);
         }
     }
+
+    @Override
+    public List<ShoppingCart> selectShoppingCart() {
+
+        return shoppingCartMapper.selectAllShoppingCart(BaseContext.getCurrentId());
+
+    }
+
+    @Override
+    public void deleteShoppingCart(ShoppingCartDTO shoppingCartDTO) {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        BeanUtils.copyProperties(shoppingCartDTO, shoppingCart);
+        shoppingCart.setUserId(BaseContext.getCurrentId());
+        ShoppingCart shoppingCartOrd = shoppingCartMapper.selectShoppingCart(shoppingCart);
+        Integer number = shoppingCartOrd.getNumber();
+
+        //查询购物车中该商品的数量是否多件
+        if (number >= 2) {
+            shoppingCartOrd.setNumber(number - 1);
+            shoppingCartMapper.updateShoppingCart(shoppingCartOrd);
+
+        }else  {
+            shoppingCartMapper.deleteShoppingCart(shoppingCart);
+        }
+    }
+
+    @Override
+    public void cleanShoppingCart() {
+
+        shoppingCartMapper.cleanShoppingCart(BaseContext.getCurrentId());
+    }
+
 }
