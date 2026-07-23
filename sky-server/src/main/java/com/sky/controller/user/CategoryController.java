@@ -1,4 +1,3 @@
-/*
 package com.sky.controller.user;
 
 import com.sky.entity.Category;
@@ -20,12 +19,11 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    */
 /**
      * 查询分类
      * @param type
      * @return
-     *//*
+     */
 
     @GetMapping("/list")
     @ApiOperation("查询分类")
@@ -34,4 +32,3 @@ public class CategoryController {
         return Result.success(list);
     }
 }
-*/
